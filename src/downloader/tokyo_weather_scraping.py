@@ -28,9 +28,11 @@ def create_table(table_data):
      "降水量最大1時間(mm)", "降水量最大10分間(mm)", "平均気温","最高気温","最低気温",
      "平均湿度(%)","最低湿度(%)","平均風速(m/s)","最大風速(m/s)","最大風速風向","最大瞬間風速(m/s)",
      "最大瞬間風速風向","日照時間(h)","降雪合計(cm)","最深積雪値(cm)", "天気概況昼(06:00~18:00)","天気概況夜(18:00~翌日06:00)"]
+
     for i in range(len(table_data)):
         row_dict = {}
         table_value = table_data[i].split()
+        table_value = [v for v in table_value if v!=')']
         for j in range(len(table_value)):
             row_dict[table_key[j]] = table_value[j]
         table.append(row_dict)
