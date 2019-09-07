@@ -32,6 +32,6 @@ if __name__ == '__main__':
     entry = data['entry']
     df = pd.DataFrame([x['content']['label'] for x in entry], columns=["feedback"])
     if output_path:
-        df.to_csv(output_path +  "app-feedback" + dt.now().strftime("%Y-%d") + ".csv")
+        df.to_csv(output_path +  "app-feedback" + dt.now().strftime("%Y-%m-%d") + ".csv")
     else:
         print(df.head())
