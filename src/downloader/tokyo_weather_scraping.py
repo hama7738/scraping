@@ -53,4 +53,7 @@ if __name__ == '__main__':
     table_data = extract_data(url)
     table = create_table(table_data=table_data)
     df_table = pd.DataFrame(table)
-    df_table.to_csv(output_path + "tenki-" + str(year) + str(month) + ".csv")
+    if output_path:
+        df_table.to_csv(output_path + "tenki-" + str(year) + str(month) + ".csv")
+    else:
+        print(df_table.head())
