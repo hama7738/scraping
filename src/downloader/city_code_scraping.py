@@ -7,9 +7,9 @@ import datetime as dt
 import ssl
 
 
-def create_url(cityCode):
+def create_url(prefCode):
     url = "https://opendata.resas-portal.go.jp/"
-    url += "api/v1/industry/power/forIndustry?cityCode=" + str(cityCode) + "&year=2012&prefCode=13&sicCode=-"
+    url = url + "api/v1/cities?prefCode=" + str(prefCode)
     return url
 
 def extract_data(url, api_key):
@@ -22,21 +22,18 @@ def extract_data(url, api_key):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--api_key")
-    parser.add_argument("--cityCode")
+    parser.add_argument("--prefCode")
     parser.add_argument("--output_path")
 
     args = parser.parse_args()
     api_key = args.api_key
-    cityCode = args.cityCode
+    prefCode = args.prefCode
     output_path = args.output_path
 
-    url = create_url(cityCode=cityCode)
+    url = create_url(prefCode=prefCode)
     json_obj = extract_data(url=url, api_key=api_key)
-    df = pd.DataFrame(json_obj['result']['data'])
-    df['prefCode'] = json_obj['result']['prefCode']
-    df['prefName'] = json_obj['result']['prefName']
-    df['cityCode'] = str(cityCode)
+    df = pd.DataFrame(json_obj['result'])
     if output_path:
-        df.to_csv(output_path +"tokyo-industry-2012-data-cityCode" + str(cityCode) + ".csv")
+        df.to_csv(output_path +"city-code-prefCode" + str(prefCode) + ".csv")
     else:
-        print(df.head())
+        print(df)
